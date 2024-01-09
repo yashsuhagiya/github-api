@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 app.get('/githubdata', async (req, res) => {
   try {
     const data = await readFile(FILE_PATH, 'utf8');
-    res.json(data);
+    res.json(JSON.parse(data));
   } catch (error) {
     console.error("Error reading file:", error);
     res.status(500).json({ error: "Error retrieving GitHub data" });
