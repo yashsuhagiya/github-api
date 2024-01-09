@@ -27,7 +27,6 @@ async function fetchAndSaveGitHubData() {
 
 app.get('/', (req, res) => {
   res.send("Hello World!");
-  setInterval(fetchAndSaveGitHubData, 12 * 60 * 60 * 1000);
 });
 
 // Endpoint to retrieve GitHub data
@@ -43,4 +42,5 @@ app.get('/githubdata', async (req, res) => {
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
+  setInterval(fetchAndSaveGitHubData, 12 * 60 * 60 * 1000);
 });
