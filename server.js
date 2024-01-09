@@ -1,27 +1,35 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import { writeFile, readFile } from 'fs/promises';
-import { join } from 'path';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const FILE_PATH = join(__dirname, 'githubData.json');
+const FILE_PATH = path.join(__dirname, 'githubData.json');
 
 // Middleware to fetch and save GitHub data
-app.use(async (req, res, next) => {
+async function fetchAndSaveGitHubData() {
   try {
     const response = await fetch("https://api.github.com/users/yashsuhagiya/repos");
     const githubData = await response.json();
 
     if (githubData.message) {
-      return res.status(500).json({ error: "Error fetching GitHub data" });
+      throw new Error("Error fetching GitHub data");
     }
 
     await writeFile(FILE_PATH, JSON.stringify(githubData));
-    next();
+    console.log("GitHub data updated."); // Log the update for verification
   } catch (error) {
     console.error("Error fetching data:", error);
-    return res.status(500).json({ error: "Error fetching GitHub data" });
   }
+}
+
+app.get('/', (req, res) => {
+  res.send("Hello World!");
 });
 
 // Endpoint to retrieve GitHub data
@@ -37,4 +45,5 @@ app.get('/githubdata', async (req, res) => {
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
+  setInterval(fetchAndSaveGitHubData, 12 * 60 * 60 * 1000);
 });
