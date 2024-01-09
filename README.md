@@ -42,7 +42,7 @@ The API has one endpoint:
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](/LICENCE)
 
 ## Author
 
