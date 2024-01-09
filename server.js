@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs').promises;
 const path = require('path');
 
 const app = express();
@@ -32,8 +33,16 @@ app.get('/', (req, res) => {
 // Endpoint to retrieve GitHub data
 app.get('/githubdata', async (req, res) => {
   try {
-    const data = await readFile(FILE_PATH, 'utf8');
-    res.json(JSON.parse(data));
+    const fileExists = await fs.access(FILE_PATH)
+      .then(() => true)
+      .catch(() => false);
+
+    if (fileExists) {
+      const data = await fs.readFile(FILE_PATH, 'utf8');
+      res.json(JSON.parse(data));
+    } else {
+      fetchAndSaveGitHubData();
+    }
   } catch (error) {
     console.error("Error reading file:", error);
     res.status(500).json({ error: "Error retrieving GitHub data" });
