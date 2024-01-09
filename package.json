@@ -1,20 +1,23 @@
 {
   "name": "github-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Node server to fetch GitHub data every 12 hours to avoid exceeding the rate limit!",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "express",
+    "github",
+    "api",
+    "fetch"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "fs": "^0.0.1-security",
-    "node-fetch": "^3.3.2",
     "nodemon": "^3.0.2",
     "path": "^0.12.7"
   }
